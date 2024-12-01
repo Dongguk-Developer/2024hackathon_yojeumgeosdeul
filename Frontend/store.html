@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>네이버 지도</title>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=vmpxyvd9r1"></script>
+    <style>
+        /* 전체 레이아웃 설정 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+            background-color: #f9f9f9;
+            overflow: hidden;
+        }
+
+        /* 왼쪽 콘텐츠 영역 */
+        #content {
+            width: 25%; /* 왼쪽 영역을 20%로 설정 */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            background-color: #ffffff;
+            box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
+            overflow-y: auto; /* 내용이 많아지면 스크롤 */
+        }
+
+        /* 제목 스타일 */
+        #title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* 검색창 스타일 */
+        #searchBox {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        #searchBox input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        #searchBox button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        #searchBox button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 정보 표시 영역 */
+        #storeInfo {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+        }
+
+        #storeInfo img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        /* 지도 영역 */
+        #map {
+            width: 75%; /* 오른쪽 영역을 75%로 설정 */
+            height: 100%; /* 화면 높이를 꽉 채움 */
+            position: relative;
+        }
+         /* 예약 버튼 스타일 */
+         #reserveButton {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: navy;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #reserveButton:hover {
+            background-color: rgb(8, 142, 186);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 왼쪽 콘텐츠 영역 -->
+    <div id="content">
+        <div id="title">요즘것들</div> <!-- 제목 -->
+        <div id="searchBox">
+            <input type="text" id="searchInput" placeholder="검색할 장소를 입력하세요">
+            <button id="searchButton">검색</button>
+        </div>
+        <div id="storeInfo"></div> <!-- 추가 정보가 표시될 영역 -->
+    </div>
+
+    <!-- 오른쪽 지도 영역 -->
+    <div id="map"></div>
+
+    <script>
+        let map;
+        let infoWindow; 
+    
+        // 지도 초기화
+        function initMap() {}
+            map = new naver.maps.Map("map", {
+                center: new naver.maps.LatLng(35.8562, 129.2247), // 경주 중심 좌표
+                zoom: 12,
+            });
+    
+            infoWindow = new naver.maps.InfoWindow({
+                content: "" 
+            });
+    
+            // 마커 정보를 배열로 저장
+            const markerData = [
+    {
+        position: { lat:35.850776862533,lng:129.20735989459 },
+        title: "성건동 주민센터 전기차충전소",
+        description: "위치 : 경북 경주시 금성로 370\n★상가임대★\n* 식당 성건동 행정복지센터건너편\n* 1층(단층) 116㎡\n* 현,성업중\n* 보500 월50 권시비:상담후결정",
+        image: "picture/jumpoo1.jpeg"
+    },
+    {
+        position: { lat:35.850608083679,lng:129.20671828007 },
+        title: "참좋은보습학원",
+        description: "위치 : 경북 경주시 금성로 369\n★상가임대★ * 배달전문점 성건동 금성로369번길7 * 가나동 자25호 북부상가내 약20㎡ * 배달업하기 좋은공간 매장앞 바로주차가능 * 대형후드 순간온수기 설치됨 필요시(45박스냉장고,에어컨)가능 * 보200 월20",
+        image: "picture/jumpoo2.jpeg"
+    },
+    {
+        position: { lat:35.850608083679,lng:129.20671828007 },
+        title: "경상북도 경주시 중부동",
+        description: "★ 사무실 임대 ★ 경주시 황성동, 3층 사무실 * 보증금 500만 원, 월세 30만 원",
+        image: "picture/jumpo1.jpg"
+    },
+    {
+        position: { lat: 35.841667, lng: 129.208333 },
+        title: "경상북도 경주시 외동읍",
+        description: "★ 공장 임대 ★ 외동읍 산업단지 내 공장 * 대지 3000㎡, 건물 1200㎡ * 보증금 1억 원, 월세 500만 원",
+        image: "picture/jumpo2.jpg"
+    },
+    {
+        position: { lat: 35.825556, lng: 129.210278 },
+        title: "경상북도 경주시 황남동",
+        description: "★ 카페 임대 ★ 불국동 관광단지 내 카페 * 실내 200㎡, 보증금 3천만 원, 월세 150만 원",
+        image: "picture/jumpo3.jpg"
+    },
+    {
+        position: { lat: 35.800278, lng: 129.260278 },
+        title: "경상북도 경주시 양북면",
+        description: "★ 펜션 매매 ★ 양북면 해변 근처 펜션 * 대지 1000㎡, 건물 400㎡ * 매매가 3억 원",
+        image: "picture/jumpo1.jpg"
+    },
+    {
+        position: { lat: 35.866389, lng: 129.201667 },
+        title: "경상북도 경주시 현곡면",
+        description: "★ 주택 매매 ★ 안강읍 중심지 단독주택 * 대지 500㎡, 건물 200㎡ * 매매가 2억 5천만 원",
+        image: "picture/jumpo2.jpg"
+    },
+    {
+        position: { lat: 35.770833, lng: 129.341667 },
+        title: "경상북도 경주시 감포읍",
+        description: "★ 횟집 임대 ★ 감포항 근처 횟집 * 대지 300㎡, 보증금 1천만 원, 월세 50만 원",
+        image: "picture/jumpo3.jpg"
+    },
+    {
+        position: { lat: 35.8375, lng: 129.224167 },
+        title: "경상북도 경주시 황오동",
+        description: "★ 사무실 매매 ★ 경주시청 인근 사무실 * 대지 200㎡, 건물 150㎡ * 매매가 3억 원",
+        image: "picture/jumpo1.jpg"
+    },
+    {
+        position: { lat: 35.856667, lng: 129.223611 },
+        title: "경상북도 경주시 황성동",
+        description: "★ 학원 임대 ★ 경주시 북부동 학원 * 실내 150㎡, 보증금 2천만 원, 월세 100만 원",
+        image: "picture/jumpo2.jpg"
+    },
+    {
+        position: { lat: 35.789722, lng: 129.288611 },
+        title: "경상북도 경주시 양남면",
+        description: "★ 별장 매매 ★ 양남면 별장 * 대지 1200㎡, 건물 300㎡ * 매매가 4억 원",
+        image: "picture/jumpo3.jpg"
+    },
+    {
+        position: { lat: 35.844722, lng: 129.209444 },
+        title: "경상북도 경주시 중부동",
+        description: "★ 레스토랑 임대 ★ 황남동 관광단지 레스토랑 * 보증금 5000만 원, 월세 200만 원",
+        image: "picture/jumpo1.jpg"
+    },
+    {
+        position: { lat: 35.856111, lng: 129.222222 },
+        title: "경상북도 경주시 황성동",
+        description: "★ 미용실 임대 ★ 선도동 중심가 미용실 * 보증금 1천만 원, 월세 70만 원",
+        image: "picture/jumpo2.jpg"
+    },
+    {
+        position: { lat: 35.859167, lng: 129.222222 },
+        title: "경상북도 경주시 황성동",
+        description: "★ 병원 매매 ★ 용강동 소형 병원 매매 * 매매가 5억 원",
+        image: "picture/jumpo3.jpg"
+    },
+    {
+        position: { lat: 35.867778, lng: 129.216944 },
+        title: "경상북도 경주시 황성동",
+        description: "★ 상가 매매 ★ 월성동 대형 상가 매매 * 대지 700㎡, 건물 500㎡ * 매매가 10억 원",
+        image: "picture/jumpo1.jpg"
+    },
+    {
+        position: { lat: 35.855833, lng: 129.209722 },
+        title: "경상북도 경주시 성건동",
+        description: "★ 상가 임대 ★ 남부동 중심가 상가 * 보증금 2천만 원, 월세 120만 원",
+        image: "picture/jumpo2.jpg"
+    },
+    {
+        position: { lat: 35.851111, lng: 129.209444 },
+        title: "경상북도 경주시 성건동",
+        description: "★ 창고 임대 ★ 탑동 창고 * 대지 1000㎡, 건물 600㎡ * 보증금 3천만 원, 월세 150만 원",
+        image: "picture/jumpo3.jpg"
+    },
+    {
+        position: { lat: 35.863611, lng: 129.215278 },
+        title: "경상북도 경주시 황성동",
+        description: "★ 학원 매매 ★ 교동 학원 건물 매매 * 매매가 8억 원",
+        image: "picture/jumpo1.jpg"
+    },
+    {
+        position: { lat: 35.870278, lng: 129.218889 },
+        title: "경상북도 경주시 황성동",
+        description: "★ 카페 매매 ★ 동부동 카페 매매 * 매매가 2억 원",
+        image: "picture/jumpo2.jpg"
+    },
+    {
+        position: {lat:35.850776862533,lng:129.20735989459},
+        title: "경상북도 경주시 성건동",
+        description: "★ 카페 매매 ★ 성건동 카페 매매 * 매매가 1.5억 원",
+        image: "picture/jumpo3.jpg"
+    },
+    {
+        position: { lat: 35.873244, lng: 129.220247 },
+        title: "경상북도 경주시 용강동",
+        description: "★ 레스토랑 매매 ★ 성건동 레스토랑 매매 * 매매가 2억 원",
+        image: "picture/jumpo1.jpg"
+    },
+    {
+        position: { lat: 35.874244, lng: 129.221247 },
+        title: "경상북도 경주시 용강동",
+        description: "★ 분식집 매매 ★ 성건동 분식집 매매 * 매매가 5천만 원",
+        image: "picture/jumpo2.jpg"
+    },
+    {
+        position: { lat: 35.875244, lng: 129.222247 },
+        title: "경상북도 경주시 용강동",
+        description: "★ 치킨집 매매 ★ 성건동 치킨집 매매 * 매매가 1.8억 원",
+        image: "picture/jumpo3.jpg"
+    },
+
+];
+    
+function initMap() {
+            map = new naver.maps.Map("map", {
+                center: new naver.maps.LatLng(35.8562, 129.2247), // 경주 중심 좌표
+                zoom: 12,
+            });
+
+            infoWindow = new naver.maps.InfoWindow({
+                content: "" 
+            });
+
+            // 마커 생성
+            markerData.forEach((data) => {
+                const marker = new naver.maps.Marker({
+                    position: new naver.maps.LatLng(data.position.lat, data.position.lng),
+                    map: map,
+                    icon: {
+                        content: '<img src="picture/dotdotdot.png" alt="" style="width: 22px; height: 35px;">',
+                        size: new naver.maps.Size(22, 35),
+                        anchor: new naver.maps.Point(11, 35)
+                    },
+                    title: data.title
+                });
+
+                // 마커 클릭 시 정보 창 표시
+                naver.maps.Event.addListener(marker, 'click', function () {
+                    showStoreInfo(data.title, data.description, data.image);
+                    infoWindow.setContent('<div style="padding:10px;">' + data.title + '</div>');
+                    infoWindow.open(map, marker);
+                });
+            });
+
+            // 검색 버튼 클릭 시 동작
+            document.getElementById("searchButton").addEventListener("click", function() {
+                const searchQuery = document.getElementById("searchInput").value.trim();
+                if (searchQuery) {
+                    searchLocation(searchQuery);
+                }
+            });
+        }
+
+        // 검색한 장소에 맞는 정보 표시
+        function searchLocation(query) {
+            const location = markerData.find(data => data.title.includes(query));
+
+            if (location) {
+                map.setCenter(new naver.maps.LatLng(location.position.lat, location.position.lng));
+                map.setZoom(14);
+
+                showStoreInfo(location.title, location.description, location.image);
+
+                // 정보 창 표시
+                infoWindow.setContent('<div style="padding:10px;">' + location.title + '</div>');
+                infoWindow.open(map, new naver.maps.Marker({
+                    position: new naver.maps.LatLng(location.position.lat, location.position.lng),
+                    map: map
+                }));
+            } else {
+                alert("검색한 장소를 찾을 수 없습니다.");
+            }
+        }
+
+        // 정보 표시 함수
+        function showStoreInfo(title, description, imageSrc) {
+            const storeInfo = document.getElementById("storeInfo");
+            storeInfo.innerHTML = `
+                <h3>${title}</h3>
+                <p>${description}</p>
+                <img src="${imageSrc}" alt="store image">
+                <button id="reserveButton" onclick="reserveAction()">예약하기</button>
+
+            `;
+        }
+        // 예약 버튼 클릭 시 동작
+        function reserveAction() {
+            window.location.href="book.html";
+        }
+
+        // 지도 로드
+        window.onload = initMap;
+    </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="stylesheet" href="login.css">
+    <script src="login.js" defer></script> <!-- login.js 추가 -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #loginContainer {
+            width: 360px;
+            padding: 30px;
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        #logoContainer {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        #logo {
+            width: 180px; /* 로고 크기 크게 조정 */
+            height: auto;
+        }
+
+        .inputField {
+            width: 90%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #3305a6;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #22077d;
+        }
+
+        /* 체크박스 스타일 */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-container input {
+            margin-right: 10px;
+        }
+
+        /* 옵션들 (아이디 찾기, 비밀번호 찾기 등) */
+        .options {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .options a {
+            color: #3b05a1;
+            text-decoration: none;
+        }
+
+        .options a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loginContainer">
+        <!-- 로고 -->
+        <div id="logoContainer">
+            <a href="main.html"><img id="logo" src="picture/mainlogo.jpeg" alt="로고"></a>
+        </div>
+
+        <!-- 로그인 폼 -->
+        <input type="text" id="username" class="inputField" placeholder="아이디 또는 전화번호" />
+        <input type="password" id="password" class="inputField" placeholder="비밀번호" />
+
+        <!-- 로그인 상태 유지 체크박스 -->
+        <div class="checkbox-container">
+            <input type="checkbox" id="stayLoggedIn">
+            <label for="stayLoggedIn">로그인 상태 유지</label>
+        </div>
+
+        <!-- 로그인 버튼 -->
+        <button class="btn" id="loginButton">로그인</button>
+
+        <!-- 옵션들 -->
+        <div class="options">
+            <a href="login_id.html">아이디 찾기</a>
+            <a href="login_password.html">비밀번호 찾기</a>
+        </div>
+
+        <div class="options">
+            <a href="login_sign.html">회원가입</a>
+            <a href="login_qr.html">QR 코드 로그인</a>
+        </div>
+    </div>
+
+</body>
+</html>

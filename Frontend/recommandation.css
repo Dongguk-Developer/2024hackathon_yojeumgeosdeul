@@ -1,0 +1,74 @@
+/* 전체 페이지 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* 화면 높이가 최소 100vh로 설정 */
+    color: #333;
+    box-sizing: border-box; /* 박스 크기 계산에 padding, border 포함 */
+}
+
+/* 결과 컨테이너 스타일 */
+#result-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    margin-top: 20px; /* 상단에 여백을 추가하여 상단이 잘리지 않게 함 */
+}
+
+/* 제목 스타일 */
+h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 추천 리스트 스타일 */
+#results-list {
+    list-style-type: none; /* 기본 불릿 제거 */
+    padding: 0;
+}
+
+/* 리스트 항목 스타일 */
+#results-list li {
+    background-color: #f8f8f8;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-size: 18px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+/* 리스트 항목 호버 시 스타일 */
+#results-list li:hover {
+    background-color: #0062A0;
+    color: white;
+    transform: scale(1.05); /* 마우스를 올리면 커지는 효과 */
+}
+
+/* 각 항목의 마지막 여백 제거 */
+#results-list li:last-child {
+    margin-bottom: 0;
+}
+
+/* <a> 태그 스타일링 */
+#results-list a {
+    text-decoration: none; /* 기본 텍스트 밑줄 제거 */
+    color: inherit; /* 부모의 글자색을 상속받음 */
+    display: block; /* 전체 항목을 클릭 영역으로 만듦 */
+    height: 100%; /* 전체 항목을 클릭 영역으로 만듦 */
+}
+
+/* <a> 태그 호버 시 스타일 */
+#results-list a:hover {
+    color: inherit; /* 링크의 색상은 그대로 */
+}

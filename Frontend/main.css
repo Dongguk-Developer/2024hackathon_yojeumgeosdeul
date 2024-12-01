@@ -1,0 +1,156 @@
+/* Reset */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    line-height: 1.6;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.law, .news, .notices {
+    background-color: white;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    max-height: 400px; /* 怨좎젙 �믪씠 */
+    overflow-y: auto; /* �대� �ㅽ겕濡� �쒖꽦�� */
+    position: relative; /* 怨좎젙 湲곗� */
+}
+
+.law h3, .news h3, .notices h3 {
+    font-size: 24px;
+    margin: 0; /* 湲곕낯 �щ갚 �쒓굅 */
+    position: sticky; /* �대��먯꽌 怨좎젙 */
+    top: 0; /* �뱀뀡�� �곷떒 怨좎젙 */
+    background-color: white; /* 諛곌꼍�� �ㅼ젙 */
+    z-index: 10; /* �ㅽ겕濡� 肄섑뀗痢� �꾩뿉 �쒖떆 */
+    padding: 10px 0; /* �щ갚 異붽� */
+    border-bottom: 2px solid #eee; /* �쒓컖�� 援щ텇 */
+}
+
+/* 肄섑뀗痢� �ㅽ��� */
+.law ul, .news ul, .notices ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px; /* �쒕ぉ怨� 由ъ뒪�� 媛꾧꺽 */
+}
+
+.law ul li, .news ul li, .notices ul li {
+    margin-bottom: 10px;
+}
+
+.law ul li a, .news ul li a, .notices ul li a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 16px;
+}
+
+.law ul li a:hover, .news ul li a:hover, .notices ul li a:hover {
+    text-decoration: underline;
+}
+
+/* �ㅽ겕濡ㅻ컮 而ㅼ뒪�곕쭏�댁쭠 */
+
+
+.law::-webkit-scrollbar, .news::-webkit-scrollbar, .notices::-webkit-scrollbar {
+    width: 8px;
+}
+
+.law::-webkit-scrollbar-thumb, .news::-webkit-scrollbar-thumb, .notices::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
+
+.law::-webkit-scrollbar-thumb:hover, .news::-webkit-scrollbar-thumb:hover, .notices::-webkit-scrollbar-thumb:hover {
+    background-color: #999;
+}
+
+/* 諛섏쓳�� �붿옄�� */
+@media screen and (max-width: 768px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .law, .news, .notices {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+#calendar, .calendar {
+    width: 30%;
+    max-height: 400px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; 
+    overflow-y: auto;
+    position: relative; 
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-days,
+.calendar-dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    text-align: center;
+}
+
+.calendar-day {
+    font-weight: bold;
+    color: #666;
+}
+
+.calendar-date {
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.calendar-date:hover {
+    background-color: #f0f0f0;
+}
+
+.event-date {
+    background-color: #ffecb3;
+}
+
+#calendarPageButton {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+#calendarPageButton:hover {
+    background-color: #0056b3;
+}

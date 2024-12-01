@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR 코드 로그인</title>
+    <link rel="stylesheet" href="login_qr.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #qrLoginContainer {
+            width: 360px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #1ec800;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #17b600;
+        }
+
+        #countdown {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .options a {
+            display: inline-block;
+            width: 95%;
+            padding: 10px;
+            background-color: #f1f1f1;
+            color: #333;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .options a:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="qrLoginContainer">
+        <!-- QR 코드 로그인 폼 -->
+        <h2>QR 코드 로그인</h2>
+        <p>QR 코드를 스캔하여 로그인하세요.</p>
+
+        <!-- QR 코드 이미지 삽입 -->
+        <img src="picture/1uooP.jpg" alt="QR 코드" width="200px" />
+
+        <button class="btn" onclick="startQrLogin()">QR 코드 로그인 시작</button>
+
+        <!-- "이전으로 돌아가기" 버튼을 QR 코드 로그인 스타일로 수정 -->
+        <div class="options">
+            <a href="login.html" class="btn">이전으로 돌아가기</a>
+        </div>
+
+        <!-- 카운트다운 표시 -->
+        <div id="countdown">남은 시간: 30초</div>
+    </div>
+
+    <script>
+        function startQrLogin() {
+            alert('QR 코드 스캔을 시작합니다!');
+        }
+
+        let timeLeft = 30; // 30초
+        const countdownElement = document.getElementById('countdown');
+
+        // 매초마다 남은 시간 갱신
+        const countdownInterval = setInterval(function() {
+            countdownElement.textContent = `남은 시간: ${timeLeft}초`;
+            timeLeft--;
+
+            // 시간이 0초가 되면 알림을 띄우고 페이지를 새로 고침
+            if (timeLeft < 0) {
+                clearInterval(countdownInterval);
+                alert("30초가 지났습니다. 페이지가 새로 고쳐집니다.");
+                location.reload();  // 페이지 새로고침
+            }
+        }, 1000);  // 1000ms = 1초
+    </script>
+
+</body>
+</html>

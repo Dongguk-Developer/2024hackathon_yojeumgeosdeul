@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>달력 상세보기</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+        #calendar {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        #event-list {
+            max-width: 900px;
+            margin: 20px auto;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        #event-list h3 {
+            margin-bottom: 10px;
+        }
+        .calendar-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">달력 상세보기</div>
+</header>
+
+<div id="calendar"></div>
+<div id="event-list">
+    <h3>일정 목록</h3>
+    <ul id="eventDetails"></ul>
+</div>
+
+<script src="main.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        renderCalendar();
+
+        const eventDetailsElement = document.getElementById('eventDetails');
+        const events = [
+            { year: 2024, month: 11, day: 25, description: "크리스마스" },
+            { year: 2024, month: 11, day: 31, description: "신년 전날" }
+        ];
+
+        events.forEach(event => {
+            const eventDate = new Date(event.year, event.month, event.day);
+            const eventItem = document.createElement('li');
+            eventItem.innerText = `${eventDate.getFullYear()}년 ${eventDate.getMonth() + 1}월 ${eventDate.getDate()}일 - ${event.description}`;
+            eventDetailsElement.appendChild(eventItem);
+        });
+    });
+</script>
+
+</body>
+</html>

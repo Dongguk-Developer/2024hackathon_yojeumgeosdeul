@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>예약 시스템</title>
+    <link rel="stylesheet" href="book.css">
+</head>
+
+<header>
+    <a href="main.html"><img src="picture/mainlogo.jpeg" alt="로고" id="logo"></a>
+</header>
+
+<body>
+    <h1>예약 시스템</h1>
+    
+    <div id="reservation-form">
+        <label for="name">이름:</label>
+        <input type="text" id="name" placeholder="이름을 입력하세요">
+        <br>
+
+        <label for="phone">전화번호:</label>
+        <input type="text" id="phone" placeholder="전화번호를 입력하세요">
+        <br>
+
+        <label for="start-date">예약 시작 날짜:</label>
+        <input type="date" id="start-date">
+        <br>
+
+        <label for="start-time">예약 시작 시간:</label>
+        <input type="time" id="start-time">
+        <br>
+
+        <label for="end-date">예약 종료 날짜:</label>
+        <input type="date" id="end-date">
+        <br>
+
+        <label for="end-time">예약 종료 시간:</label>
+        <input type="time" id="end-time">
+        <br>
+
+        <button id="reserve-btn">예약하기</button>
+    </div>
+
+    <h2>예약 확인</h2>
+    <button id="check-reservations-btn">예약 확인</button>
+    
+    <div id="reservations-list"></div>
+
+    <script src="book.js"></script>
+</body>
+</html>

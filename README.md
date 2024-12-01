@@ -18,19 +18,19 @@
 ---
 ## 서비스 아키텍처(예시)
 
-![서비스 아키텍처](./img/System_Architecture.png)
+![서비스 아키텍처](./img/DALL·E 2024-12-01 12.23.27 - A minimalist service architecture diagram for a policy recommendation web application. The diagram includes only the essential components_ a front-end.png)
 
 ---
 ## 사용 기술(예시)
 | **Category**         | **Technologies** |
 |----------------------|-------------|
-| **Frontend**         | html        |
-| **Backend**          | flask, excel |
-| **devops**           | localhost   |
-| **Others**           | Github, Notion, Figma |
+| **Frontend**         | html, css, js      |
+| **Backend**          |             |
+| **devops**           | localhost:3000   |
+| **Others**           | Github      |
 
 ---
 ## 팀원 소개
-| **팀원 이름**            | **팀원 이름** | **팀원 이름** | **팀원 이름** |
+| **팀원 이름**            | **요즘것들** | **팀원 이름** | **팀원 이름** |
 |----------------------|----------|-----------|---------|
 | 팀장(Leader), Frontend | Frontend | Backend, devops | Backend |
